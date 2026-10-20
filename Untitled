@@ -1,0 +1,58 @@
+# Choorlak — Project Guide
+
+## About the Project
+- Project: Choorlak
+- Framework: React.js with Vite
+- Styling: Tailwind CSS
+- I am a beginner learning React.js.
+- I want to build my website step by step.
+
+## Important Rules for Cursor
+
+### 1. Ask Before Changing Files
+- Never modify, create, delete, or rename files without my approval.
+- First inspect the relevant existing code.
+- Explain what you want to change and why.
+- Tell me exactly which files need changes.
+- Wait for my permission before editing.
+
+### 2. Make Small Changes
+- Work on one component or feature at a time.
+- Do not change unrelated files.
+- Do not redesign existing sections without approval.
+- Keep the website responsive.
+
+### 3. Teach Me React
+- Use simple English.
+- Explain new React concepts.
+- Explain important code changes line by line.
+- Prefer `useState` for simple component state.
+- Avoid unnecessary libraries and complex solutions.
+
+### 4. Color Theme
+- Check `src/theme/colors.js` before changing colors.
+- Reuse existing theme colors where possible.
+- Do not create a second theme file without approval.
+
+### 5. Token Efficiency
+- Read only the files relevant to my current task.
+- Do not scan the entire project unnecessarily.
+- Give short and clear explanations.
+- Avoid repeating code that has not changed.
+- Do not rewrite complete components for small changes unless necessary.
+
+## Current Project Structure
+- `src/components/layout/Navbar.jsx` — Navbar
+- `src/components/home/Herosection.jsx` — Hero section
+- `src/pages/Home.jsx` — Home page
+- `src/data/siteContent.json` — Site content
+- `src/theme/colors.js` — Theme colors
+- `src/index.css` — Global styling
+
+## Development Workflow
+1. Inspect the relevant file.
+2. Explain the proposed change.
+3. Wait for my approval.
+4. Implement one small change.
+5. Explain what changed.
+6. Wait for my next instruction.

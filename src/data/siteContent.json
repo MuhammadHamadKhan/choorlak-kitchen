@@ -1,0 +1,30 @@
+{
+  "brandName": "Choorlak",
+  "nav": [
+    { "label": "Features", "path": "/features" },
+    { "label": "Online Ordering", "path": "/online-ordering" },
+    { "label": "How It Works", "path": "/how-it-works" },
+    { "label": "Contact", "path": "/contact" }
+  ],
+  "cta": "Book a Demo",
+  "hero": {
+    "eyebrow": "Built for modern restaurants",
+    "title": ["Every Order.", "Every Station.", "One System."],
+    "body": "Manage orders from your counter, online customers, and kitchen in one simple system. Choorlak helps your team work faster, stay organized, and serve customers better.",
+    "button": "Book a Demo"
+  },
+  "liveTracking": {
+    "title": "Live Order Tracking",
+    "table": "Table 08",
+    "orderNumber": "#184",
+    "status": "Preparing",
+    "item": "Chicken Karahi",
+    "extras": "2 × Naan",
+    "steps": [
+      { "label": "Order Received", "time": "10:24 AM", "state": "done" },
+      { "label": "Kitchen", "time": "10:27 AM", "state": "current" },
+      { "label": "Ready", "time": "---", "state": "upcoming" }
+    ],
+    "message": "Your order is being prepared."
+  }
+}
