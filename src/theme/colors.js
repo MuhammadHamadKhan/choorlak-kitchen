@@ -3,8 +3,8 @@
 // so Tailwind classes like bg-primary stay in sync.
 
 export const colors = {
-  primary: '#D71920',
-  primaryHover: '#B8141A',
+  primary: '#A90A14',
+  primaryHover: '#8A0810',
   black: '#0B0B0C',
   white: '#FFFFFF',
   textDark: '#111111',

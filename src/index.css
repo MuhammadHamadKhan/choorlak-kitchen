@@ -2,8 +2,8 @@
 
 /* Keep these values the same as src/theme/colors.js */
 @theme {
-  --color-primary: #D71920;
-  --color-primary-hover: #B8141A;
+  --color-primary: #A90A14;
+  --color-primary-hover: #8A0810;
   --color-black: #0B0B0C;
   --color-white: #FFFFFF;
   --color-text-dark: #111111;
@@ -11,6 +11,129 @@
   --color-text-muted: #6B7280;
   --color-gray-light: #F5F5F5;
   --color-border: #E5E5E5;
+  --animate-float-y: float-y 3s ease-in-out infinite;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes hero-fly-ticket {
+  0% {
+    opacity: 0.35;
+    transform: translate(0, 0) scale(0.96);
+  }
+  18% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+    transform: translate(4.5rem, -3.2rem) scale(1);
+  }
+}
+
+.hero-fly-ticket {
+  animation: none;
+  opacity: 1;
+}
+
+.hero-ticket-cluster {
+  pointer-events: none;
+}
+
+.hero-fly-ticket-card {
+  border: 1.5px solid #ff6a6a;
+  background: rgba(18, 8, 8, 0.42);
+  box-shadow:
+    0 0 1px #ffb0b0,
+    0 0 6px #ff4a4a,
+    0 0 14px rgba(255, 40, 40, 0.9),
+    0 0 28px rgba(255, 30, 30, 0.45),
+    inset 0 0 12px rgba(255, 50, 50, 0.12);
+}
+
+.hero-fly-ticket-2 {
+  animation-delay: 2.4s;
+}
+
+.hero-fly-ticket-3 {
+  animation-delay: 4.8s;
+}
+
+@media (min-width: 640px) {
+  @keyframes hero-fly-ticket {
+    0% {
+      opacity: 0.35;
+      transform: translate(0, 0) scale(0.96);
+    }
+    18% {
+      opacity: 1;
+    }
+    82% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.2;
+      transform: translate(5.5rem, -3.8rem) scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fly-ticket,
+  .hero-fly-ticket-2,
+  .hero-fly-ticket-3 {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.station-stack-card {
+  transform-origin: top center;
+  transition: transform 0.45s ease-out;
+}
+
+/* How it works flip cards (used in the next step) */
+.how-flip {
+  perspective: 1000px;
+}
+
+.how-flip-inner {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+.how-flip.is-flipped .how-flip-inner {
+  transform: rotateY(180deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .how-flip:hover .how-flip-inner {
+    transform: rotateY(180deg);
+  }
+}
+
+.how-flip-front,
+.how-flip-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.how-flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
 }
 
 body {
