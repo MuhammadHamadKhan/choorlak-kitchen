@@ -1,138 +1,108 @@
-
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import siteContent from '../../data/siteContent.json'
-import choorlakLogo from '../../assets/logo.jpg'
+import choorlakLogo from '../../assets/logo.png'
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-  const closeMenu = () => setMenuOpen(false)
+  // When the page moves down, fill the bar so links stay readable.
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 24)
+    }
 
-  const navLinkClass = ({ isActive }) =>
-    `transition-colors duration-200 hover:text-primary ${
-      isActive ? 'font-semibold text-primary' : 'text-text-dark'
-    }`
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-  const mobileNavLinkClass = ({ isActive }) =>
-    `block w-full rounded-lg px-3 py-3 transition-colors duration-200 hover:text-primary ${
-      isActive ? 'font-semibold text-primary' : 'text-text-dark'
-    }`
+  function goHome() {
+    setMenuOpen(false)
+    window.history.replaceState(null, '', '/')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function goToSection(id) {
+    setMenuOpen(false)
+    window.history.replaceState(null, '', `/#${id}`)
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
+    <header
+      className={`fixed top-0 z-50 w-full transition-colors duration-300 ${
+        scrolled || menuOpen ? 'bg-black' : 'bg-transparent'
+      }`}
+    >
       <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-22 lg:px-8">
-
-        {/* Logo */}
         <NavLink
           to="/"
-          onClick={closeMenu}
-  aria-label="Choorlak Home"
-  className="flex shrink-0 items-center"
->
-  <img
-    src={choorlakLogo}
-    alt="Choorlak restaurant logo"
-    className="h-12 w-auto object-contain sm:h-14"
-  />
-
-          <span className="text-2xl font-bold tracking-tight text-text-dark sm:text-3xl">
+          onClick={goHome}
+          className="flex shrink-0 items-center gap-2"
+        >
+          <img
+            src={choorlakLogo}
+            alt="Choorlak restaurant logo"
+            className="h-10 w-auto object-contain sm:h-12"
+          />
+          <span className="text-2xl font-bold tracking-tight text-text-light sm:text-3xl">
             {siteContent.brandName}
           </span>
         </NavLink>
 
-        {/* Desktop navigation */}
-        <div className="hidden items-center gap-6 lg:flex xl:gap-10">
+        <div className="hidden items-center gap-8 lg:flex">
           {siteContent.nav.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={navLinkClass}
+            <button
+              key={item.hash}
+              type="button"
+              onClick={() => goToSection(item.hash)}
+              className="text-text-light transition-colors hover:text-primary"
             >
               {item.label}
-            </NavLink>
+            </button>
           ))}
         </div>
 
-        {/* Desktop CTA */}
-        <NavLink
-          to="/contact"
-          className="hidden rounded-xl bg-primary px-7 py-3.5 font-semibold text-text-light transition-colors hover:bg-primary-hover lg:inline-flex"
+        <button
+          type="button"
+          onClick={() => goToSection('contact')}
+          className="hidden rounded-xl bg-primary px-7 py-3.5 font-semibold text-text-light hover:bg-primary-hover lg:inline-flex"
         >
           {siteContent.cta}
-        </NavLink>
+        </button>
 
-        {/* Mobile controls */}
-        <div className="flex items-center gap-3 lg:hidden">
-          <NavLink
-            to="/contact"
-            onClick={closeMenu}
-            className="hidden rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-text-light hover:bg-primary-hover sm:inline-flex"
-          >
-            {siteContent.cta}
-          </NavLink>
-
-          <button
-            type="button"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setMenuOpen((open) => !open)}
-            className="flex h-11 w-11 items-center justify-center rounded-lg border border-border text-text-dark"
-          >
-            {menuOpen ? (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M18 6 6 18M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
-        </div>
+        <button
+          type="button"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="flex h-11 w-11 items-center justify-center rounded-lg border border-text-light/40 text-xl text-text-light lg:hidden"
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
       </nav>
 
-      {/* Dim overlay — click it to close. Stays in the page so it can fade. */}
-      <button
-        type="button"
-        aria-label="Close menu"
-        tabIndex={menuOpen ? 0 : -1}
-        onClick={closeMenu}
-        className={`fixed top-[4.5rem] right-0 bottom-0 left-0 z-30 bg-black/50 transition-opacity duration-700 ease-out lg:hidden ${
-          menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
-        }`}
-      />
-
-      {/* Mobile and tablet side panel — stays in the page so it can slide */}
-      <div
-        id="mobile-navigation"
-        aria-hidden={!menuOpen}
-        className={`fixed top-[4.5rem] right-0 z-40 flex h-[calc(100vh-4.5rem)] w-64 max-w-[75%] flex-col gap-1 overflow-y-auto border-l border-border bg-white px-4 py-5 shadow-md transition-[translate] duration-700 ease-out lg:hidden ${
-          menuOpen ? 'translate-x-0' : 'pointer-events-none translate-x-full'
-        }`}
-      >
-        <div className="flex flex-col divide-y divide-border">
+      {menuOpen && (
+        <div className="border-t border-white/15 bg-black px-4 py-4 lg:hidden">
           {siteContent.nav.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              onClick={closeMenu}
-              className={mobileNavLinkClass}
+            <button
+              key={item.hash}
+              type="button"
+              onClick={() => goToSection(item.hash)}
+              className="block w-full py-3 text-left text-text-light hover:text-primary"
             >
               {item.label}
-            </NavLink>
+            </button>
           ))}
+          <button
+            type="button"
+            onClick={() => goToSection('contact')}
+            className="mt-3 w-full rounded-lg bg-primary px-5 py-3 font-semibold text-text-light"
+          >
+            {siteContent.cta}
+          </button>
         </div>
-
-        <NavLink
-          to="/contact"
-          onClick={closeMenu}
-          className="mt-6 rounded-lg bg-primary px-5 py-3 text-center font-semibold text-text-light sm:hidden"
-        >
-          {siteContent.cta}
-        </NavLink>
-      </div>
+      )}
     </header>
   )
 }

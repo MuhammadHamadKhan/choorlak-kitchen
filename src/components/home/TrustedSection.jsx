@@ -1,15 +1,55 @@
-const restaurants = ['Mian G', 'Spice', 'Noon', 'Lahore', 'Diner']
-
-const stats = [
-  { value: '1,000+', label: 'restaurants live' },
-  { value: '1,800+', label: 'orders a day' },
-  { value: '5', label: 'minute setup' },
-  { value: '24/7', label: 'help desk' },
+const restaurants = [
+  {
+    name: 'Mian G',
+    logo: (
+      <svg viewBox="0 0 32 32" className="block h-12 w-12 shrink-0" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#111111" />
+        <path d="M8 22V10h4l4 7 4-7h4v12h-3.5v-7l-4.5 7-4.5-7v7H8Z" fill="#FFFFFF" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Spice',
+    logo: (
+      <svg viewBox="0 0 32 32" className="block h-12 w-12 shrink-0" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#A90A14" />
+        <circle cx="16" cy="16" r="6" fill="none" stroke="#FFFFFF" strokeWidth="2.5" />
+        <circle cx="16" cy="16" r="2" fill="#FFFFFF" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Noon',
+    logo: (
+      <svg viewBox="0 0 32 32" className="block h-12 w-12 shrink-0" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#111111" />
+        <path d="M8 22V10h5c4 0 7 2.5 7 6s-3 6-7 6H8Zm4-3.5h1.5c1.6 0 2.8-1 2.8-2.5S15.1 13.5 13.5 13.5H12v5Z" fill="#FFFFFF" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Lahore',
+    logo: (
+      <svg viewBox="0 0 32 32" className="block h-12 w-12 shrink-0" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#A90A14" />
+        <path d="M10 22V10h12v3h-8v2.5h7V18h-7V22H10Z" fill="#FFFFFF" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Diner',
+    logo: (
+      <svg viewBox="0 0 32 32" className="block h-12 w-12 shrink-0" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#111111" />
+        <path d="M9 10h3.5v5.5L16 10h4l-5 7 5.5 5h-4.2L12.5 17v5H9V10Z" fill="#FFFFFF" />
+      </svg>
+    ),
+  },
 ]
 
 function TrustedSection() {
   return (
-    <section className="bg-white px-5 py-16 text-center sm:px-8">
+    <section className="bg-white px-5 py-16 text-center sm:px-8 lg:px-12 lg:py-20">
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-text-muted">
         Trusted by restaurants
       </p>
@@ -20,36 +60,25 @@ function TrustedSection() {
         Real kitchens. Real orders. No extra apps.
       </p>
 
-      <div className="mt-10 flex flex-wrap items-center justify-center gap-8">
-        {restaurants.map((name) => (
-          <div key={name} className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-xs font-bold text-text-dark">
-              {name.charAt(0)}
-            </span>
-            <span className="text-sm font-bold uppercase tracking-wide text-text-dark">
-              {name}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className="mx-auto mt-8 w-full max-w-4xl">
-        {/* Red line */}
-        <div className="h-0.5 bg-primary" aria-hidden="true" />
-
-        <div className="mt-0 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((item) => (
-            <div key={item.label} className="flex flex-col items-center">
-              {/* Short tick from the red line down to the card */}
-              <div
-                className="hidden h-4 w-0.5 bg-primary lg:block"
-                aria-hidden="true"
-              />
-              <div className="w-full rounded-xl border border-dashed border-primary/40 bg-gray-light px-5 py-5 text-left">
-                <span className="mb-3 block h-2 w-2 rounded-full bg-primary" />
-                <p className="text-3xl font-bold text-text-dark">{item.value}</p>
-                <p className="mt-1 text-sm text-text-muted">{item.label}</p>
-              </div>
+      <div className="trusted-marquee mt-10 py-4">
+        <div className="trusted-marquee-track">
+          {[0, 1, 2, 3].map((copy) => (
+            <div
+              key={copy}
+              className="trusted-marquee-set"
+              aria-hidden={copy === 0 ? undefined : true}
+            >
+              {restaurants.map((restaurant) => (
+                <div
+                  key={`${restaurant.name}-${copy}`}
+                  className="flex h-12 shrink-0 items-center gap-3"
+                >
+                  {restaurant.logo}
+                  <span className="leading-none text-base font-bold uppercase tracking-wide text-text-dark">
+                    {restaurant.name}
+                  </span>
+                </div>
+              ))}
             </div>
           ))}
         </div>
